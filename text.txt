@@ -1,0 +1,1 @@
+initial prompt: make a stunning impressive portfolioin nextjs, im a full stack web developer by the way , you may use anything (libraries, UI, anything) (project of nextjs is still manually being creaetd, so now only focusing on planning)
