@@ -33,6 +33,68 @@ New plans are stacked newest first using this skeleton:
 - Constraints: <decisions to respect, things not to break>
 - Verification: <reference only — runs happen solely when the owner asks>
 
+### Plan 002 — ArtPanel hover/visual polish (Work section)
+- Status: pending
+- Goal: richer project image panels — ambient hue glow, layered shadows,
+  sheen sweep, scrim + "View" chip, gloss ring, subtle image color
+  treatment. All hover FX scoped to the panel itself (`group/panel`).
+- Files: `components/sections/projects.tsx` (only the `ArtPanel`
+  function + one line in `FeaturedProject`).
+- Steps:
+  1. Wrap: `ArtPanel` return becomes `<div className="group/panel
+     relative">` around everything; keep the existing `data-art-panel`
+     div unchanged inside it.
+  2. Glow (before the panel div, inside the wrapper):
+     ```tsx
+     <div
+       aria-hidden
+       className="pointer-events-none absolute -inset-5 rounded-4xl opacity-0 blur-2xl transition-opacity duration-700 group-hover/panel:opacity-100"
+       style={{
+         background: `radial-gradient(55% 55% at 70% 30%, hsl(${project.hue} 65% 55% / 0.35), transparent 70%),
+           radial-gradient(45% 45% at 25% 80%, hsl(${project.hue + 40} 60% 50% / 0.28), transparent 70%)`,
+       }}
+     />
+     ```
+     (Sibling order puts the panel above it — no negative z-index
+     needed; works inside TiltCard's transform stacking context.)
+  3. Panel shadow: extend the panel div's `cn(...)` with:
+     `"shadow-[0_10px_30px_-12px_rgb(0_0_0/0.18)] transition-shadow duration-500"`,
+     `"group-hover/panel:shadow-[0_24px_56px_-16px_rgb(0_0_0/0.28)]"`.
+     Optionally use canonical Tailwind v4 classes: `aspect-16/10` /
+     `aspect-video` instead of `aspect-[16/10]` / `aspect-[16/9]`.
+  4. Image treatment: change the `<Image>` className to
+     `"object-cover transition-[transform,filter] duration-700 ease-out saturate-[0.92] group-hover/panel:scale-[1.04] group-hover/panel:saturate-100"`
+     (replaces the card-level `group-hover:scale-[1.03]`; then the
+     `className="group"` on FeaturedProject's `<div data-hover>` wrapper
+     can be removed).
+  5. Gloss ring + sheen + scrim + chip (inside the panel div, after the
+     image/letter):
+     ```tsx
+     <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/25 dark:ring-white/10" />
+     <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-1/2 -translate-x-[160%] rotate-12 bg-gradient-to-r from-transparent via-white/25 to-transparent blur-md transition-transform duration-1000 ease-out group-hover/panel:translate-x-[360%]" />
+     <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover/panel:opacity-100" />
+     <span className="pointer-events-none absolute bottom-4 right-4 flex translate-y-2 items-center gap-1.5 rounded-full border border-white/20 bg-black/45 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white opacity-0 backdrop-blur-md transition-all duration-500 group-hover/panel:translate-y-0 group-hover/panel:opacity-100">
+       View <ArrowUpRight className="h-3 w-3" />
+     </span>
+     ```
+     Sheen math: element is w-1/2 of panel; -160% → 360% of own width
+     sweeps fully across (off-left → off-right).
+  6. Year chip (optional polish): theme-safe version —
+     `"absolute left-5 top-5 rounded-md bg-background/70 px-2 py-1 font-mono text-xs uppercase tracking-[0.25em] text-muted backdrop-blur-sm"`
+     (current code uses owner's `bg-gray-200`, which breaks in dark
+     mode — owner's call whether to keep).
+  7. Tweak/dial-down knobs: glow intensity (0.35/0.28 alphas), shadow
+     spreads, sheen `via-white/25` opacity, scrim height `h-2/5`,
+     image `saturate-[0.92]`. Reduce any if too loud; all are
+     independent.
+- Constraints: CSS-only, no new deps; everything keyed to
+  `group/panel` so grid cards and featured cards behave identically;
+  don't touch TiltCard/Reveal; keep `data-art-panel` + `--panel-dark`
+  dark-mode mechanism intact; falls back gracefully for gradient-only
+  projects (FX layers sit on top of gradient + letter too).
+- Verification: reference only — owner implements manually; if asked,
+  `npx tsc --noEmit` + visual pass in light/dark at hover.
+
 ### Plan 001 — Portfolio site (minimal & elegant, showcase motion)
 - Status: done 2026-09-07
 - Goal: single-page portfolio for Hassan, full-stack developer, with

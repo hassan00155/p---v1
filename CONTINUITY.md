@@ -59,6 +59,12 @@ Keep it short: a snapshot, a log, and pointers — not a diary.
 
 ## Log (newest first)
 
+- 2026-09-15 — Visual polish postponed by owner → written up as
+  **Plan 002** in `PLANS.md` (Status: pending). Owner wants to implement
+  the ArtPanel hover FX manually later; the plan holds the exact
+  snippets. Do not re-implement it for the owner unless asked — topmost
+  pending plan rule applies.
+
 - 2026-09-15 — Owner reverted the ArtPanel visual upgrade (glow, sheen,
   scrim, "View" chip, gloss ring, shadows). `ArtPanel` in
   `components/sections/projects.tsx` is back to the plain version: image
