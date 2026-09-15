@@ -59,6 +59,13 @@ Keep it short: a snapshot, a log, and pointers — not a diary.
 
 ## Log (newest first)
 
+- 2026-09-15 — Owner reverted the ArtPanel visual upgrade (glow, sheen,
+  scrim, "View" chip, gloss ring, shadows). `ArtPanel` in
+  `components/sections/projects.tsx` is back to the plain version: image
+  or gradient + initial letter, owner-styled year chip (`bg-gray-200`),
+  image hover scale via card wrapper `group`. Per-project `image` field
+  support stays.
+
 - 2026-09-15 — Added optional per-project `image` support in the Work
   section.
 

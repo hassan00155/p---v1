@@ -22,30 +22,19 @@ function artStyle(hue: number) {
 function ArtPanel({ project, large }: { project: Project; large?: boolean }) {
   const styles = artStyle(project.hue);
   return (
-    <div className="group/panel relative">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-5 rounded-[2rem] opacity-0 blur-2xl transition-opacity duration-700 group-hover/panel:opacity-100"
-        style={{
-          background: `radial-gradient(55% 55% at 70% 30%, hsl(${project.hue} 65% 55% / 0.35), transparent 70%),
-            radial-gradient(45% 45% at 25% 80%, hsl(${project.hue + 40} 60% 50% / 0.28), transparent 70%)`,
-        }}
-      />
-      <div
-        data-art-panel
-        style={
-          {
-            backgroundImage: styles.backgroundImage,
-            "--panel-dark": styles.darkImage,
-          } as CSSProperties
-        }
-        className={cn(
-          "relative flex items-center justify-center overflow-hidden rounded-2xl border border-hairline",
-          "shadow-[0_10px_30px_-12px_rgb(0_0_0/0.18)] transition-shadow duration-500",
-          "group-hover/panel:shadow-[0_24px_56px_-16px_rgb(0_0_0/0.28)]",
-          large ? "aspect-[16/10]" : "aspect-[16/9]",
-        )}
-      >
+    <div
+      data-art-panel
+      style={
+        {
+          backgroundImage: styles.backgroundImage,
+          "--panel-dark": styles.darkImage,
+        } as CSSProperties
+      }
+      className={cn(
+        "relative flex items-center justify-center overflow-hidden rounded-2xl border border-hairline",
+        large ? "aspect-[16/10]" : "aspect-[16/9]",
+      )}
+    >
       {project.image ? (
         <Image
           src={project.image}
@@ -65,7 +54,7 @@ function ArtPanel({ project, large }: { project: Project; large?: boolean }) {
       )}
       <span
         aria-hidden
-        className="absolute left-5 top-5 font-mono text-xs uppercase tracking-[0.25em] text-muted"
+        className="absolute left-5 top-5 font-mono text-xs uppercase tracking-[0.25em] text-muted bg-gray-200 p-1 px-2  rounded-md"
       >
         {project.year}
       </span>
