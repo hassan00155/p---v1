@@ -59,6 +59,17 @@ Keep it short: a snapshot, a log, and pointers — not a diary.
 
 ## Log (newest first)
 
+- 2026-09-15 — Added optional per-project `image` support in the Work
+  section.
+
+  `Project` type in `content/site.ts` gained `image?: string` (path under
+  `/public`, e.g. `"/projects/friends.png"`, or full URL). `ArtPanel` in
+  `components/sections/projects.tsx` renders `next/image` (fill + sizes +
+  object-cover, subtle group-hover zoom; featured cards got `group` on
+  their wrapper) when `image` is set, otherwise the original hue gradient
+  + initial letter. No projects have images set yet — owner asked how to
+  change the panels; answer: set `image` on the project entry.
+
 - 2026-09-07 — Full portfolio shipped in one session (build + lint passed
   before the no-verification rule was discovered; owner waived the rest).
 

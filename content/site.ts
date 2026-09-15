@@ -47,11 +47,11 @@ export const stack = {
   categories: [
     {
       title: "Frontend",
-      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Motion", "Vue"],
+      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Firgma Design"],
     },
     {
       title: "Backend",
-      items: ["Node.js", "PostgreSQL", "GraphQL", "Prisma", "Redis", "Go"],
+      items: ["Node.js", "PostgreSQL", "GraphQL", "Prisma", "Redis", "API Principles"],
     },
     {
       title: "Ops & Tools",
@@ -80,11 +80,24 @@ export type Project = {
   year: string;
   tags: string[];
   hue: number;
+  /** Optional: path under /public (e.g. "/projects/friends.png") or full URL. Falls back to gradient art when omitted. */
+  image?: string;
   links: { live: string; source: string };
 };
 
 export const projects = {
   featured: [
+    {
+      title: "Friends Social",
+      description:
+        'A full-stack social platform with JWT auth, a live news feed, posts with privacy controls, likes, follows, and photo uploads.',
+      year: "2026",
+      // Next.js, TypeScript, MongoDB, Tailwind CSS
+      tags: ['Next.js', 'TypeScript', 'MongoDB', 'Tailwind CSS'],
+      hue: 160,
+      links: { live: "https://friends-x.vercel.app", source: "https://github.com/yuzakki/friends" },
+      image: "/designs/projects/friends/preview.webp"
+    },
     {
       title: "Nova Commerce",
       description:
