@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { projects, type Project } from "@/content/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
@@ -34,16 +35,26 @@ function ArtPanel({ project, large }: { project: Project; large?: boolean }) {
         large ? "aspect-[16/10]" : "aspect-[16/9]",
       )}
     >
+      {project.image ? (
+        <Image
+          src={project.image}
+          alt={`${project.title} preview`}
+          fill
+          sizes={large ? "(max-width: 768px) 100vw, 58vw" : "(max-width: 768px) 100vw, 50vw"}
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+        />
+      ) : (
+        <span
+          aria-hidden
+          className="pointer-events-none select-none font-serif italic leading-none text-foreground/10 dark:text-foreground/10"
+          style={{ fontSize: large ? "9rem" : "5rem" }}
+        >
+          {project.title.charAt(0)}
+        </span>
+      )}
       <span
         aria-hidden
-        className="pointer-events-none select-none font-serif italic leading-none text-foreground/10 dark:text-foreground/10"
-        style={{ fontSize: large ? "9rem" : "5rem" }}
-      >
-        {project.title.charAt(0)}
-      </span>
-      <span
-        aria-hidden
-        className="absolute left-5 top-5 font-mono text-xs uppercase tracking-[0.25em] text-muted"
+        className="absolute left-5 top-5 font-mono text-xs uppercase tracking-[0.25em] text-muted bg-gray-200 p-1 px-2  rounded-md"
       >
         {project.year}
       </span>
@@ -85,7 +96,7 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
     <Reveal>
       <article className="grid items-center gap-10 md:grid-cols-12 md:gap-14">
         <TiltCard className={cn("md:col-span-7", flipped && "md:order-2")}>
-          <div data-hover>
+          <div data-hover className="group">
             <ArtPanel project={project} large />
           </div>
         </TiltCard>
